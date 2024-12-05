@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import requests
 import json
 from dotenv import load_dotenv
@@ -12,6 +13,15 @@ if not API_KEY:
     raise ValueError("API_KEY")
 
 app = FastAPI()
+
+# Configuración de CORS para permitir cualquier origen
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permitir cualquier origen
+    allow_credentials=True,
+    allow_methods=["*"],  # Permitir cualquier método (GET, POST, etc.)
+    allow_headers=["*"],  # Permitir cualquier encabezado
+)
 
 # Función para leer contenido del archivo .docx
 def leer_documento(docx_path: str) -> str:
